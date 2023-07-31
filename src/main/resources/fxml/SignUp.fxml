@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="211.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mfsum.ui.SignUpController">
+   <center>
+      <VBox alignment="TOP_CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="211.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Registrierung">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="loginMessageLabel" textFill="CRIMSON" />
+            <HBox minWidth="489.0" prefHeight="35.0" prefWidth="489.0">
+               <children>
+                  <Label text="Name">
+                     <padding>
+                        <Insets left="185.0" top="15.0" />
+                     </padding>
+                  </Label>
+                  <TextField fx:id="name">
+                     <HBox.margin>
+                        <Insets left="5.0" top="10.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="113.0" prefHeight="21.0" prefWidth="600.0">
+               <children>
+                  <Label text="geschäftliche E-Mail Adresse">
+                     <padding>
+                        <Insets left="65.0" top="15.0" />
+                     </padding>
+                  </Label>
+                  <TextField fx:id="eMail">
+                     <HBox.margin>
+                        <Insets left="5.0" top="5.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="113.0" prefHeight="14.0" prefWidth="600.0">
+               <children>
+                  <Label text="Passwort">
+                     <padding>
+                        <Insets left="170.0" top="15.0" />
+                     </padding>
+                  </Label>
+                  <TextField fx:id="password">
+                     <HBox.margin>
+                        <Insets left="5.0" top="5.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox prefHeight="33.0" prefWidth="600.0">
+               <children>
+                  <Button fx:id="cancel" mnemonicParsing="false" text="abbrechen">
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="save" mnemonicParsing="false" text="speichern" />
+               </children>
+               <padding>
+                  <Insets left="227.0" top="5.0" />
+               </padding>
+            </HBox>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <padding>
+            <Insets top="10.0" />
+         </padding>
+      </VBox>
+   </center>
+</BorderPane>

@@ -1,0 +1,138 @@
+public void postMail(String[] recipients, String subject, String message, String from, String attachmentfilename) throws InterruptedException, InvocationTargetException {
+        try {
+            Multipart multipart = null;
+            BodyPart messageBodyPart = null;
+            File t_fileName = null;
+            //  Set the host smtp address
+            Properties props = new Properties();
+            props.put("mail.smtp.host", "yourhost");
+            props.put("mail.smtp.auth", "true");
+            Authenticator auth = new SMTPAuthenticator();
+            Session session = Session.getDefaultInstance(props, auth);
+            session.setDebug(false);
+
+            //  create a message
+            Message msg = new MimeMessage(session);
+
+            //    set the from and to address
+            InternetAddress addressFrom = new InternetAddress(from);
+            msg.setFrom(addressFrom);
+
+            InternetAddress[] addressTo = new InternetAddress[recipients.length];
+            for (int i = 0; i < recipients.length; i++) {
+                addressTo[i] = new InternetAddress(recipients);
+
+                msg.setRecipient(Message.RecipientType.TO, addressTo[i]);
+
+            }
+
+            msg.addHeader("MyHeaderName", "myHeaderValue");
+
+
+
+// Setting the Subject and Content Type
+
+            msg.setSubject(subject);
+
+            multipart = new MimeMultipart();
+
+
+
+            messageBodyPart = new MimeBodyPart();
+
+            messageBodyPart.setText(message);
+
+
+
+            try {
+
+                if (!attachmentfilename.equals("")) {
+
+                    t_fileName = new File(attachmentfilename);
+
+                    DataSource source = new FileDataSource(t_fileName.getAbsoluteFile());
+
+                    messageBodyPart.setDataHandler(new DataHandler(source));
+
+                    messageBodyPart.setFileName(attachmentfilename.split("/")[attachmentfilename.split("/").length-1]);
+
+                }
+
+            } catch (Exception ex) {
+
+            }
+
+            multipart.addBodyPart(messageBodyPart);
+
+            msg.setContent(multipart, "text/html; charset=ISO8859_1");
+
+            messageBodyPart = new MimeBodyPart();
+
+            messageBodyPart.setText(message);
+
+            multipart.addBodyPart(messageBodyPart);
+
+            Transport.send(msg, addressTo);
+
+
+
+        } catch (Exception ex) {
+
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+
+        }
+
+    }
+
+
+
+    private class SMTPAuthenticator extends javax.mail.Authenticator {
+
+
+
+        @Override
+
+        public PasswordAuthentication getPasswordAuthentication() {
+
+            String username = "abc@abc.com";
+
+            String password = "1234";
+
+            return new PasswordAuthentication(username, password);
+
+
+
+        }
+
+    }
+    // Timer to send automatically every week
+    Timer timer = new Timer();
+    Calendar date = Calendar.getInstance();
+
+    DateFormat sdf = new SimpleDateFormat("HH:mm");//yyyyy.MMMMM.dd GGG hh:mm aaa
+    Date dateToBackup = null;
+		try {
+        dateToBackup = sdf.parse("15:15");
+    } catch (ParseException e) {
+        e.printStackTrace();
+    }
+    Calendar calendar = Calendar.getInstance();
+		calendar.setTime(dateToBackup);
+		date.set(Calendar.HOUR, calendar.get(Calendar.HOUR));
+		date.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE));
+		date.set(Calendar.SECOND, calendar.get(Calendar.SECOND));
+		date.set(Calendar.MILLISECOND, 0);
+
+    // Schedule to run every day.
+
+
+	timer.scheduleAtFixedRate(
+            new TimerTask() {
+        @Override
+        public void run() {
+            dispatch();// here calling the sent email method
+            System.out.println("task is running........"+new Date());
+        }
+    },
+            date.getTime(),
+            1000 * 60 * 60 * 24);

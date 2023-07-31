@@ -8,8 +8,14 @@ module com.example.mfsum {
     requires net.synedra.validatorfx;
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
-    requires eu.hansolo.tilesfx;
+
+    requires java.logging;
+    requires java.sql;
 
     opens com.example.mfsum to javafx.fxml;
     exports com.example.mfsum;
+    exports com.example.mfsum.ui;
+    opens com.example.mfsum.ui to javafx.fxml;
+    opens com.example.mfsum.business.sqlConnection to javafx.graphics;
+    exports com.example.mfsum.business.sqlConnection to javafx.graphics;
 }
